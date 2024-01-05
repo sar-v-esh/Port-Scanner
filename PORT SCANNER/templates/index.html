@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Scanner</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        #scan-progress-bar {
+            height: 5px;
+            background-color: #007BFF;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-b from-gray-900 to-black text-white p-4">
+    <div class="max-w-md mx-auto bg-gray-800 p-6 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold mb-4 text-green-400 text-center">Port Scanner</h1>
+        <form action="/scan" method="post" id="scan-form" class="mb-4">
+            <div class="mb-4">
+                <label for="targets" class="block text-gray-300 text-sm font-semibold mb-2">Target Host IPs/Domains (comma-separated):</label>
+                <input type="text" id="targets" name="targets" placeholder="Example: 192.168.1.1, example.com" class="bg-gray-700 shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-4">
+                <label for="domain" class="block text-gray-300 text-sm font-semibold mb-2">Common Domain Name:</label>
+                <input type="text" id="domain" name="domain" placeholder="Example: mydomain.com" class="bg-gray-700 shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-4">
+                <label for="portRange" class="block text-gray-300 text-sm font-semibold mb-2">Port Range (e.g., 1-100):</label>
+                <input type="text" id="portRange" name="portRange" placeholder="Example: 1-100" class="bg-gray-700 shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline">
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-300 text-sm font-semibold mb-2">Select a Scan Type:</label>
+                <div class="mt-2">
+                    <label class="inline-flex items-center">
+                        <input type="radio" class="form-radio text-green-400" name="scanType" value="-sS">
+                        <span class="ml-2">TCP SYN</span>
+                    </label>
+                    <label class="inline-flex items-center ml-6">
+                        <input type="radio" class="form-radio text-green-400" name="scanType" value="-sT">
+                        <span class="ml-2">TCP Connect</span>
+                    </label>
+                    <label class="inline-flex items-center ml-6">
+                        <input type="radio" class="form-radio text-green-400" name="scanType" value="-sU">
+                        <span class="ml-2">UDP</span>
+                    </label>
+                </div>
+            </div>
+            <button type="submit" class="bg-green-400 hover:bg-green-500 text-white px-4 py-2 rounded-md w-full transition duration-300 ease-in-out" id="scan-button">Start Scanning</button>
+        </form>
+        
+        <div class="mt-6" id="results-container">
+            <h2 class="text-xl font-semibold mb-2 text-green-400">Scan Results:</h2>
+            <pre id="scan-results" class="bg-gray-700 border p-2 rounded-md text-white"></pre>
+            <div id="scan-updates" class="mt-4 text-gray-300"></div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='scan.js') }}"></script>
+</body>
+</html>
